@@ -1,9 +1,13 @@
 import express, { Express, Request, Response } from "express";
-const setupDb = require("./db/db-setup");
-const carRouter = require("./routes/car-router");
+import swaggerUi from "swagger-ui-express";
+import { setupDb } from "./db/db-setup";
+import carRouter from "./routes/car-router";
+import userRouter from "./routes/user-router";
+import YAML from "yamljs";
 
 const app: Express = express();
 const port = process.env.PORT || 5000;
+const swaggerDocument = YAML.load("./openapi.yaml");
 
 setupDb();
 
@@ -11,6 +15,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", carRouter);
+app.use("/users", userRouter);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req: Request, res: Response) => {
   res.send("typescript server run...");

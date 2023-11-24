@@ -6,6 +6,9 @@ export async function up(knex: Knex): Promise<void> {
     table.string("name", 255).notNullable();
     table.integer("price").notNullable();
     table.string("image", 255).notNullable();
+    table.integer("created_by").unsigned().references("id").inTable("users");
+    table.integer("updated_by").unsigned().references("id").inTable("users");
+    table.integer("deleted_by").unsigned().references("id").inTable("users");
     table.timestamps(true, true);
   });
 }

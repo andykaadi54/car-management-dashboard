@@ -1,113 +1,71 @@
 import { Request, Response } from "express";
-import cloudinary from "../middleware/cloudinary";
-import { CarsModel } from "../db/models/cars";
+import { CarsService } from "../services/car-services";
 
-export const get = async (req: Request, res: Response) => {
-  try {
-    const cars = await CarsModel.query();
-    return res.json(cars);
-  } catch (error) {
-    return res.status(500).json({ error: "Gagal mengambil daftar mobil" });
-  }
-};
-
-export const post = async (req: Request, res: Response) => {
-  try {
-    const { name, price } = req.body;
-
-    if (!req.file) {
-      return res
-        .status(400)
-        .json({ error: "Tidak ada file gambar yang diunggah" });
+class CarsController {
+  static async get(req: Request, res: Response) {
+    try {
+      const cars = await CarsService.getAll();
+      return res.json(cars);
+    } catch (error) {
+      return res.status(500).json({ error: "Gagal mengambil daftar mobil" });
     }
+  }
 
-    const fileBase64 = req.file.buffer.toString("base64");
-    const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+  static async post(req: Request, res: Response) {
+    try {
+      const { name, price } = req.body;
+      const newCar = await CarsService.create(req, { name, price });
+      return res.json(newCar);
+    } catch (error) {
+      return res.status(500).json({ error: "Gagal menambahkan mobil" });
+    }
+  }
 
-    cloudinary.uploader.upload(file, async (error, result: any) => {
-      if (error) {
-        return res
-          .status(500)
-          .json({ error: "Gagal mengunggah gambar ke Cloudinary" });
+  static async getById(req: Request, res: Response) {
+    const carId = Number(req.params.id);
+    try {
+      const car = await CarsService.getById(carId);
+
+      if (!car) {
+        return res.status(404).json({ error: "Mobil tidak ditemukan" });
       }
 
-      const imageUrl = result.secure_url;
+      return res.json(car);
+    } catch (error) {
+      return res.status(500).json({ error: "Gagal mengambil data mobil" });
+    }
+  }
 
-      try {
-        const newCar = await CarsModel.query().insert({
-          name,
-          price,
-          image: imageUrl,
-          created_at: new Date(),
-          updated_at: new Date(),
-        });
-        return res.json(newCar);
-      } catch (err) {
-        return res
-          .status(500)
-          .json({ error: "Gagal menambahkan mobil ke database" });
+  static async deleteById(req: Request, res: Response) {
+    const carId = Number(req.params.id);
+    try {
+      const deletedCar = await CarsService.delete(carId, req);
+
+      if (deletedCar) {
+        return res.json({ message: "Mobil berhasil dihapus" });
+      } else {
+        return res.status(404).json({ error: "Mobil tidak ditemukan" });
       }
-    });
-  } catch (error) {
-    return res.status(500).json({ error: "Gagal menambahkan mobil" });
-  }
-};
-
-export const getById = async (req: Request, res: Response) => {
-  const carId = Number(req.params.id);
-  try {
-    const car = await CarsModel.query().findById(carId);
-
-    if (!car) {
-      return res.status(404).json({ error: "Mobil tidak ditemukan" });
+    } catch (error) {
+      return res.status(500).json({ error: "Gagal menghapus mobil" });
     }
-
-    return res.json(car);
-  } catch (error) {
-    return res.status(500).json({ error: "Gagal mengambil data mobil" });
   }
-};
 
-export const deleteById = async (req: Request, res: Response) => {
-  const carId = Number(req.params.id);
-  try {
-    const deletedCar = await CarsModel.query().deleteById(carId);
+  static async updateById(req: Request, res: Response) {
+    const carId = Number(req.params.id);
+    try {
+      const { name, price } = req.body;
+      const updatedCar = await CarsService.update(carId, { name, price }, req);
 
-    if (deletedCar) {
-      return res.json({ message: "Mobil berhasil dihapus" });
-    } else {
-      return res.status(404).json({ error: "Mobil tidak ditemukan" });
+      if (updatedCar) {
+        return res.json({ message: "Data Mobil berhasil di modifikasi" });
+      } else {
+        return res.status(404).json({ error: "Mobil tidak ditemukan" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: "Gagal memodifikasi data mobil" });
     }
-  } catch (error) {
-    return res.status(500).json({ error: "Gagal menghapus mobil" });
   }
-};
+}
 
-export const updateById = async (req: Request, res: Response) => {
-  const carId = Number(req.params.id);
-  try {
-    const { name, price } = req.body;
-
-    const updatedCar = await CarsModel.query().findById(carId).patch({
-      name,
-      price,
-      updated_at: new Date(),
-    });
-
-    if (updatedCar) {
-      return res.json({ message: "Data Mobil berhasil di modifikasi" });
-    } else {
-      return res.status(404).json({ error: "Mobil tidak ditemukan" });
-    }
-  } catch (error) {
-    return res.status(500).json({ error: "Gagal memodifikasi data mobil" });
-  }
-};
-
-module.exports = {
-  get,
-  getById,
-  post,
-  deleteById,
-  updateById,
-};
+export { CarsController };
