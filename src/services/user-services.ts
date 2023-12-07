@@ -37,27 +37,28 @@ class UsersService {
   static getUserIdFromToken(req: Request): number | null {
     const token = req.headers.authorization?.split(" ")[1];
     if (token) {
-      const decodedToken: any = jwt.verify(
-        token,
-        process.env.JWT_SECRET || "defaultSecret"
-      );
-      return decodedToken.userId;
+      try {
+        const decodedToken: any = jwt.verify(
+          token,
+          process.env.JWT_SECRET || "defaultSecret"
+        );
+        return decodedToken.userId;
+      } catch (error) {
+        console.error("Kesalahan dalam mendekode token:", error);
+        return null;
+      }
     }
     return null;
   }
 
   static verifyToken(token: string): any {
-    const secretKey = process.env.JWT_SECRET;
-
-    if (!secretKey) {
-      throw new Error("JWT secret key is not defined.");
-    }
+    const secretKey = process.env.JWT_SECRET || "defaultSecret";
 
     try {
       const decoded = jwt.verify(token, secretKey);
       return decoded;
     } catch (error) {
-      throw new Error("Invalid token");
+      throw new Error("Invalid or expired token");
     }
   }
 }

@@ -14,9 +14,24 @@ class CarsController {
   static async post(req: Request, res: Response) {
     try {
       const { name, price } = req.body;
+
+      if (!name || !price) {
+        return res
+          .status(400)
+          .json({ error: "Nama dan harga mobil diperlukan" });
+      }
+
       const newCar = await CarsService.create(req, { name, price });
-      return res.json(newCar);
+
+      if (newCar) {
+        return res.json(newCar);
+      } else {
+        return res
+          .status(500)
+          .json({ error: "Gagal menambahkan mobil ke database" });
+      }
     } catch (error) {
+      console.error("Error creating car:", error);
       return res.status(500).json({ error: "Gagal menambahkan mobil" });
     }
   }

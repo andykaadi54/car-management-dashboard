@@ -1,27 +1,38 @@
 # Car Management Dashboard
-Challenge-5
+
+Challenge-6
+
+Super Admin Access :
+
+- Email = super_admin@gmail.com
+- Password = 123456
 
 ## Entity Relationship Diagram
+
 ![ERD](./images/Cars.png)
 
 ## Endpoints
 
 ### Cars
-| No | URI                          | Method    | Description                              |
-| -- | ----------------             | --------- | ---------------------------------------- |
-| 1  | /cars                        | GET       | Get cars                                 |
-| 2  | /cars/:id                    | GET       | Get car by id                            |
-| 2  | /cars                        | POST      | Create car                               |
-| 4  | /cars/:id                    | DELETE    | Delete car                               |
-| 5  | /cars/:id                    | PUT       | Update car                               |
+
+| No  | URI       | Method | Description   |
+| --- | --------- | ------ | ------------- |
+| 1   | /cars     | GET    | Get cars      |
+| 2   | /cars/:id | GET    | Get car by id |
+| 2   | /cars     | POST   | Create car    |
+| 4   | /cars/:id | DELETE | Delete car    |
+| 5   | /cars/:id | PUT    | Update car    |
 
 ## Sample request and response
 
 ### Melihat Daftar Mobil yang Tersedia dalam Database
+
 #### Request Body
-```GET /cars```
+
+`GET /cars`
 
 #### Response Body
+
 ```json
 [
   {
@@ -43,13 +54,14 @@ Challenge-5
 ]
 ```
 
-
-
 ### Melihat Daftar Mobil yang Tersedia dalam Database berdasarkan Id
+
 #### Request Body
-```GET /cars/1```
+
+`GET /cars/1`
 
 #### Response Body
+
 ```json
 [
   {
@@ -63,10 +75,12 @@ Challenge-5
 ]
 ```
 
-
 ### Menambahkan Data Mobil
+
 #### Request Body
-```POST /cars```
+
+`POST /cars`
+
 ```json
 [
   {
@@ -78,6 +92,7 @@ Challenge-5
 ```
 
 #### Response Body
+
 ```json
 [
   {
@@ -91,13 +106,14 @@ Challenge-5
 ]
 ```
 
-
-
 ### Menghapus Data Mobil yang Sudah Ada
+
 #### Request Body
-```DELETE /cars/3```
+
+`DELETE /cars/3`
 
 #### Response Body
+
 ```json
 [
   {
@@ -106,10 +122,12 @@ Challenge-5
 ]
 ```
 
-
 ### Memodifikasi Data Mobil yang Sudah Ada
+
 #### Request Body
-```POST /cars/2```
+
+`POST /cars/2`
+
 ```json
 [
   {
@@ -120,6 +138,7 @@ Challenge-5
 ```
 
 #### Response Body
+
 ```json
 [
   {
@@ -132,4 +151,3 @@ Challenge-5
   }
 ]
 ```
-

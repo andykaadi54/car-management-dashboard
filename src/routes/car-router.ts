@@ -9,6 +9,11 @@ router.get("/cars", CarsController.get);
 router.get("/cars/:id", CarsController.getById);
 router.post("/cars", authenticate, upload.single("image"), CarsController.post);
 router.delete("/cars/:id", authenticate, CarsController.deleteById);
-router.put("/cars/:id", authenticate, CarsController.updateById);
+router.put(
+  "/cars/:id",
+  authenticate,
+  upload.single("image"),
+  CarsController.updateById
+);
 
 export default router;

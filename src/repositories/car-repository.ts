@@ -10,20 +10,25 @@ class CarsRepository {
   }
 
   static create(carData: any, userId: number) {
-    return CarsModel.query().insertGraph({ ...carData, created_by: userId });
+    return CarsModel.query().insertAndFetch({
+      ...carData,
+      created_by: userId,
+    });
   }
 
   static update(carId: number, carData: any, userId: number) {
     return CarsModel.query()
       .findById(carId)
-      .patch({ ...carData, updated_by: userId });
+      .patch({ ...carData, updated_by: userId, updated_at: new Date() });
   }
 
   static delete(carId: number, userId: number) {
     return CarsModel.query()
       .findById(carId)
       .patch({ deleted_by: userId })
-      .delete();
+      .then(() => {
+        return CarsModel.query().deleteById(carId);
+      });
   }
 }
 

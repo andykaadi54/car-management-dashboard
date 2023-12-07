@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "make-seed": "npx knex seed:make car --knexfile ./src/db/knexfile.ts",
+    "make-seed": "npx knex seed:make dev --knexfile ./src/db/knexfile.ts",
     "migrate": "npx knex migrate:latest --knexfile ./src/db/knexfile.ts",
     "seed": "npx knex seed:run --knexfile ./src/db/knexfile.ts",
     "down": "npx knex migrate:down --knexfile ./src/db/knexfile.ts",

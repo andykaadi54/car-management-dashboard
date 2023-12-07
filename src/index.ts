@@ -6,7 +6,7 @@ import userRouter from "./routes/user-router";
 import YAML from "yamljs";
 
 const app: Express = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 const swaggerDocument = YAML.load("./openapi.yaml");
 
 setupDb();

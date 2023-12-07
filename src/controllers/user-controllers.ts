@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { UsersService } from "../services/user-services";
-import { User } from "../models/users";
 
 class UsersController {
   static async login(req: Request, res: Response) {
@@ -30,10 +29,23 @@ class UsersController {
 
       // Check if the request is from a superadmin
       const userId = UsersService.getUserIdFromToken(req);
-      const requestingUser = await UsersService.getUserByEmail(email);
+      if (!userId) {
+        return res
+          .status(403)
+          .json({ error: "Unauthorized - Token tidak valid" });
+      }
 
-      if (!userId || !requestingUser || requestingUser.role !== "superadmin") {
-        return res.status(403).json({ error: "Unauthorized" });
+      const requestingUser = await UsersService.getUserById(userId);
+      if (!requestingUser || requestingUser.role !== "superadmin") {
+        return res
+          .status(403)
+          .json({ error: "Unauthorized - Role tidak sesuai" });
+      }
+
+      // Check if email is already in use
+      const existingUser = await UsersService.getUserByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ error: "Email sudah terdaftar" });
       }
 
       const hashedPassword = await UsersService.hashPassword(password);
@@ -46,7 +58,7 @@ class UsersController {
       });
 
       return res.json({
-        message: "Admin created successfully",
+        message: "Admin berhasil dibuat",
         admin: newAdmin,
       });
     } catch (error) {
