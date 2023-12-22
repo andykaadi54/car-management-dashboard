@@ -20,7 +20,7 @@ class CarsService {
 
     const { file } = req;
 
-    if (!file) {
+    if (!file || !file.buffer) {
       throw new Error("Tidak ada file gambar yang diunggah");
     }
 
@@ -51,6 +51,28 @@ class CarsService {
 
     if (!userId) {
       throw new Error("Unauthorized");
+    }
+
+    const existingCar = await CarsRepository.getById(carId);
+
+    const { file } = req;
+    if (existingCar && file && file.buffer) {
+      // Jika iya, upload gambar baru ke Cloudinary dan dapatkan URL baru
+      const fileBase64 = file.buffer.toString("base64");
+      const fileData = `data:${file.mimetype};base64,${fileBase64}`;
+
+      const cloudinaryResponse: any = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload(fileData, (error, result) => {
+          if (error) reject(error);
+          resolve(result);
+        });
+      });
+
+      // Perbarui URL gambar di data mobil yang akan diupdate
+      carData.image = cloudinaryResponse.secure_url;
+    } else if (existingCar) {
+      // Jika tidak ada file baru diunggah, gunakan URL gambar yang sudah ada
+      carData.image = existingCar.image;
     }
 
     return CarsRepository.update(

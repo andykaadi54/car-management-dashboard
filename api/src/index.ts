@@ -4,6 +4,7 @@ import { setupDb } from "./db/db-setup";
 import carRouter from "./routes/car-router";
 import userRouter from "./routes/user-router";
 import YAML from "yamljs";
+var cors = require("cors");
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ const swaggerDocument = YAML.load("./openapi.yaml");
 
 setupDb();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

@@ -1,9 +1,9 @@
 import Footer from "../../components/Footer";
-import GettingStarted from "../../components/GettingStarted";
-import OurService from "../../components/OurService";
-import Testimonial from "../../components/Testimonial";
-import WhyUs from "../../components/WhyUs";
-import MainSection from "../../components/mainSection";
+import GettingStarted from "../../components/GettingStarted/";
+import OurService from "../../components/OurService/";
+import Testimonial from "../../components/Testimonial/";
+import WhyUs from "../../components/WhyUs/";
+import MainSection from "../../components/MainSection/";
 
 const LandingPage = () => {
   return (

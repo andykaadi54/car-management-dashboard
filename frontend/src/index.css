@@ -9,6 +9,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #000;
   overflow-x: hidden;
+  background: #f4f5f7;
 }
 
 .main-section {
@@ -164,6 +165,11 @@ body {
   border: 1px solid #d0d0d0;
   padding: 24px;
   height: 100%;
+}
+
+.why-us-card-body img {
+  width: 100%;
+  object-fit: cover;
 }
 
 .why-us-card-body p {
