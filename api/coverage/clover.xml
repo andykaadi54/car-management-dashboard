@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1703435996851" clover="3.2.0">
-  <project timestamp="1703435996851" name="All files">
+<coverage generated="1703600489126" clover="3.2.0">
+  <project timestamp="1703600489126" name="All files">
     <metrics statements="96" coveredstatements="21" conditionals="37" coveredconditionals="3" methods="29" coveredmethods="0" elements="162" coveredelements="24" complexity="0" loc="96" ncloc="96" packages="4" files="7" classes="7"/>
     <package name="middleware">
       <metrics statements="5" coveredstatements="5" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="0"/>
-      <file name="cloudinary.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge-backup\Challenge_8\backend\src\middleware\cloudinary.ts">
+      <file name="cloudinary.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge\car-management-dashboard\api\src\middleware\cloudinary.ts">
         <metrics statements="5" coveredstatements="5" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -15,22 +15,22 @@
     </package>
     <package name="models">
       <metrics statements="6" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-      <file name="cars.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge-backup\Challenge_8\backend\src\models\cars.ts">
+      <file name="cars.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge\car-management-dashboard\api\src\models\cars.ts">
         <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
       </file>
-      <file name="users.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge-backup\Challenge_8\backend\src\models\users.ts">
+      <file name="users.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge\car-management-dashboard\api\src\models\users.ts">
         <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
       </file>
     </package>
     <package name="repositories">
       <metrics statements="17" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="0"/>
-      <file name="car-repository.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge-backup\Challenge_8\backend\src\repositories\car-repository.ts">
+      <file name="car-repository.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge\car-management-dashboard\api\src\repositories\car-repository.ts">
         <metrics statements="8" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
@@ -41,9 +41,9 @@
         <line num="42" count="0" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
       </file>
-      <file name="user-repository.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge-backup\Challenge_8\backend\src\repositories\user-repository.ts">
+      <file name="user-repository.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge\car-management-dashboard\api\src\repositories\user-repository.ts">
         <metrics statements="9" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
+        <line num="1" count="2" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
@@ -51,12 +51,12 @@
         <line num="18" count="0" type="stmt"/>
         <line num="23" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
       </file>
     </package>
     <package name="services">
       <metrics statements="68" coveredstatements="8" conditionals="31" coveredconditionals="0" methods="17" coveredmethods="0"/>
-      <file name="car-services.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge-backup\Challenge_8\backend\src\services\car-services.ts">
+      <file name="car-services.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge\car-management-dashboard\api\src\services\car-services.ts">
         <metrics statements="43" coveredstatements="4" conditionals="20" coveredconditionals="0" methods="9" coveredmethods="0"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -102,11 +102,11 @@
         <line num="112" count="0" type="stmt"/>
         <line num="116" count="1" type="stmt"/>
       </file>
-      <file name="user-services.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge-backup\Challenge_8\backend\src\services\user-services.ts">
+      <file name="user-services.ts" path="D:\SYNRGY ACADEMY\Challenge\Challenge\car-management-dashboard\api\src\services\user-services.ts">
         <metrics statements="25" coveredstatements="4" conditionals="11" coveredconditionals="0" methods="8" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
@@ -128,7 +128,7 @@
         <line num="67" count="0" type="stmt"/>
         <line num="68" count="0" type="stmt"/>
         <line num="70" count="0" type="stmt"/>
-        <line num="75" count="1" type="stmt"/>
+        <line num="75" count="2" type="stmt"/>
       </file>
     </package>
   </project>

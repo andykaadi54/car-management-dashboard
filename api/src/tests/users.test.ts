@@ -1,8 +1,6 @@
 import request from "supertest";
 import express from "express";
-import { UsersController } from "../controllers/user-controllers";
 import { UsersService } from "../services/user-services";
-import { UsersRepository } from "../repositories/user-repository";
 import { User } from "../models/users";
 
 const app = express();
@@ -36,6 +34,8 @@ describe("User Controllers", () => {
         email: "john@example.com",
         password: "hashedPassword",
         role: "member",
+        created_at: new Date(2021, 0, 1), 
+        updated_at: new Date(2021, 0, 2)
       };
 
       jest.spyOn(UsersService, "getUserByEmail").mockImplementation(async () => mockUser);
@@ -51,8 +51,8 @@ describe("User Controllers", () => {
     });
 
     it("should return 401 on invalid credentials", async () => {
-      UsersService.getUserByEmail.mockResolvedValue(undefined);
-      UsersService.comparePasswords.mockResolvedValue(false);
+      jest.spyOn(UsersService, "getUserByEmail").mockResolvedValue(undefined);
+      jest.spyOn(UsersService, "comparePasswords").mockResolvedValue(false);
 
       await request(app)
         .post("/login")
@@ -61,7 +61,7 @@ describe("User Controllers", () => {
     });
 
     it("should return 500 on internal server error", async () => {
-      UsersService.getUserByEmail.mockRejectedValue(new Error("Mocked error"));
+      jest.spyOn(UsersService, "getUserByEmail").mockRejectedValue(new Error("Mocked error"));
 
       await request(app)
         .post("/login")
@@ -72,12 +72,27 @@ describe("User Controllers", () => {
 
   describe("POST /registerAdmin", () => {
     it("should register a new admin", async () => {
-      UsersService.getUserIdFromToken.mockReturnValue(1);
-      UsersService.getUserById.mockResolvedValue({ id: 1, role: "superadmin" });
+      jest.spyOn(UsersService, "getUserIdFromToken").mockReturnValue(1);
+      jest.spyOn(UsersService, "getUserById").mockImplementation(async () => ({ 
+        id: 1,
+        name: "John Doe",
+        email: "john@example.com",
+        password: "password123",
+        created_at: new Date(),
+        updated_at: new Date(),
+        role: "superadmin"}));
 
-      UsersService.getUserByEmail.mockResolvedValue(undefined);
-      UsersService.hashPassword.mockResolvedValue("hashedPassword");
-      UsersService.createUser.mockResolvedValue({ id: 2, name: "Admin", email: "admin@example.com", role: "admin" });
+      jest.spyOn(UsersService, "getUserByEmail").mockImplementation(async () => undefined);
+      jest.spyOn(UsersService, "hashPassword").mockImplementation(async () => "hashedPassword");
+      jest.spyOn(UsersService, "createUser").mockImplementation(async () => ({ 
+        id: 2,
+        name: "Admin",
+        email: "admin@example.com",
+        role: "admin",
+        password: "hashedPassword",
+        created_at: new Date(),
+        updated_at: new Date()}));
+
 
       const response = await request(app)
         .post("/registerAdmin")
@@ -91,8 +106,15 @@ describe("User Controllers", () => {
 
   describe("POST /registerMember", () => {
     it("should register a new member", async () => {
-      UsersService.hashPassword.mockResolvedValue("hashedPassword");
-      UsersService.createUser.mockResolvedValue({ id: 3, name: "Member", email: "member@example.com", role: "member" });
+      jest.spyOn(UsersService, "hashPassword").mockImplementation(async () => "hashedPassword");
+      jest.spyOn(UsersService, "createUser").mockImplementation(async () => ({ 
+        id: 3,
+        name: "Member",
+        email: "member@example.com",
+        role: "member",
+        password: "hashedPassword",
+        created_at: new Date(),
+        updated_at: new Date()}));
 
       const response = await request(app)
         .post("/registerMember")
@@ -107,7 +129,14 @@ describe("User Controllers", () => {
   describe("GET /getCurrentUser", () => {
     it("should get current user details", async () => {
       jest.spyOn(UsersService, "getUserIdFromToken").mockReturnValue(1);
-      jest.spyOn(UsersService, "getUserById").mockImplementation(async () => ({ id: 1, name: "John Doe", email: "john@example.com", role: "member" }));
+      jest.spyOn(UsersService, "getUserById").mockImplementation(async () => ({ 
+        id: 1,
+        name: "John Doe",
+        email: "john@example.com",
+        role: "member",
+        password: "password",
+        created_at: new Date(),
+        updated_at: new Date() }));
 
 
       const response = await request(app)
